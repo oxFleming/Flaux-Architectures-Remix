@@ -16,10 +16,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) =>
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"]
+    offset: ["start end", "center center"]
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+  const grayscale = useTransform(scrollYProgress, [0, 1], ["grayscale(100%)", "grayscale(0%)"]);
 
   return (
     <motion.div
@@ -29,7 +30,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onClick }) =>
     >
       <div className="relative overflow-hidden w-full h-[500px] mb-6 bg-gray-100">
         <motion.div style={{ y, height: "115%" }} className="w-full relative -top-[7%]">
-            <img
+            <motion.img
+            style={{ filter: grayscale }}
             src={project.image}
             alt={project.title}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

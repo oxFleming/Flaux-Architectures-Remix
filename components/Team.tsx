@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Team: React.FC = () => {
+  const imageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "center center"]
+  });
+
+  const grayscale = useTransform(scrollYProgress, [0, 1], ["grayscale(100%)", "grayscale(0%)"]);
+
   return (
     <section id="team" className="py-32 bg-white scroll-mt-28">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center gap-16 lg:gap-24">
           {/* Image Column */}
           <div className="w-full md:w-1/2 relative">
-             <div className="relative aspect-[3/4] w-full max-w-md mx-auto md:mr-auto overflow-hidden rounded-sm bg-gray-100">
+             <div ref={imageRef} className="relative aspect-[3/4] w-full max-w-md mx-auto md:mr-auto overflow-hidden rounded-sm bg-gray-100">
                 {/* 
                   IMPORTANT: To display your custom image, rename your file to 'sandra-aiwohieni.jpg' 
                   and place it in the public/ root folder of your project.
                 */}
-                <img
+                <motion.img
+                  style={{ filter: grayscale }}
                   src="./sandra-aiwohieni.jpg"
                   onError={(e) => {
                     // Fallback to placeholder if local image is not found
@@ -20,7 +30,7 @@ const Team: React.FC = () => {
                     e.currentTarget.onerror = null; // Prevent infinite loop
                   }}
                   alt="Arc. Sandra Aiwohieni Airunugba"
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full h-full object-cover transition-all duration-300"
                 />
                 
                 {/* Decorative border frame */}

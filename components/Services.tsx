@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useInView } from 'framer-motion';
+import { useInView, motion, useScroll, useTransform } from 'framer-motion';
 import { Service } from '../types';
 import { ArrowRight } from 'lucide-react';
 
@@ -60,6 +60,14 @@ interface ServiceItemProps {
 }
 
 const ServiceItem: React.FC<ServiceItemProps> = ({ service, index }) => {
+  const imageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "center center"]
+  });
+
+  const grayscale = useTransform(scrollYProgress, [0, 1], ["grayscale(100%)", "grayscale(0%)"]);
+
   return (
     <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 py-16 lg:py-24 border-b border-black/10 last:border-0">
       
@@ -70,11 +78,12 @@ const ServiceItem: React.FC<ServiceItemProps> = ({ service, index }) => {
         <p className="text-gray-600 text-lg leading-relaxed mb-8 max-w-xl">
           {service.description}
         </p>
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-gray-100 mt-8">
-            <img 
+        <div ref={imageRef} className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-gray-100 mt-8">
+            <motion.img 
+              style={{ filter: grayscale }}
               src={service.image} 
               alt={service.title} 
-              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+              className="w-full h-full object-cover transition-all duration-300" 
             />
         </div>
       </div>

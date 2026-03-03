@@ -73,7 +73,11 @@ const Portfolio: React.FC = () => {
                   onClick={() => setSelectedProject(project)}
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-gray-100 mb-6">
-                    <img 
+                    <motion.img 
+                      initial={{ filter: "grayscale(100%)" }}
+                      whileInView={{ filter: "grayscale(0%)" }}
+                      viewport={{ once: false, amount: 0.3 }}
+                      transition={{ duration: 0.8 }}
                       src={project.image} 
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
