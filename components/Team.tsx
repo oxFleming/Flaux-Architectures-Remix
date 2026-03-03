@@ -23,7 +23,7 @@ const Team: React.FC = () => {
                 */}
                 <motion.img
                   style={{ filter: grayscale }}
-                  src="/sandra-aiwohieni.jpg" 
+                  src="/Sandra.jpeg" 
                   alt="Arc. Sandra Aiwohieni Airunugba"
                   className="w-full h-full object-cover transition-all duration-300"
                 />
