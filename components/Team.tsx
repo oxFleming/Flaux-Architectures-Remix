@@ -23,7 +23,6 @@ const Team: React.FC = () => {
                 */}
                 <motion.img
                   style={{ filter: grayscale }}
-                  {/* UPDATE THIS SRC TO YOUR NEW FILE OR URL */}
                   src="/sandra-aiwohieni.jpg" 
                   alt="Arc. Sandra Aiwohieni Airunugba"
                   className="w-full h-full object-cover transition-all duration-300"
