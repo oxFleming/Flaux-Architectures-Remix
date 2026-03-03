@@ -32,17 +32,38 @@ const LeadForm: React.FC<LeadFormProps> = ({ initialMessage }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({
-        name: '', email: '', phone: '', projectType: '', budget: '', location: '', timeline: '', description: ''
+
+    try {
+      // ⚠️ Replace this with your actual n8n Webhook URL (Test URL for now)
+      const webhookUrl = 'https://fastuous-sophia-counterproductively.ngrok-free.dev/webhook/flaux-leads';
+
+      const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1500);
+
+      if (response.ok) {
+        setIsSuccess(true);
+        // Clear the form fields after a successful submission
+        setFormData({
+          name: '', email: '', phone: '', projectType: '', budget: '', location: '', timeline: '', description: ''
+        });
+      } else {
+        console.error('Failed to send data to n8n');
+        alert("Something went wrong. Please try again or message us on WhatsApp.");
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert("Network error. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
