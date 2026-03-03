@@ -23,7 +23,7 @@ const Team: React.FC = () => {
                 */}
                 <motion.img
                   style={{ filter: grayscale }}
-                  src="./sandra-aiwohieni.jpg"
+                  src="./Sandra.jpeg"
                   onError={(e) => {
                     // Fallback to placeholder if local image is not found
                     e.currentTarget.src = "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop";
